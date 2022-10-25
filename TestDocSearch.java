@@ -2,6 +2,9 @@ import static org.junit.Assert.*;
 import org.junit.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
+import java.util.List;
+import java.io.File;
 import java.io.IOException;
 
 public class TestDocSearch {
@@ -9,7 +12,9 @@ public class TestDocSearch {
 	public void testIndex() throws URISyntaxException, IOException {
     Handler h = new Handler("./technical/");
     URI rootPath = new URI("http://localhost/");
-    assertEquals("There are 10 total files to search.", h.handleRequest(rootPath));
+    List<File> paths = FileHelpers.getFiles(Paths.get("./technical"));
+    int paths_size = paths.size();
+    assertEquals(String.format("There are %d total files to search.", paths_size), h.handleRequest(rootPath));
 	}
 	@Test 
 	public void testSearch() throws URISyntaxException, IOException {
